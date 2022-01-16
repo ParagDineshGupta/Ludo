@@ -1,90 +1,16 @@
 import { useEffect, useState } from "react";
+import {
+  bluePath,
+  falsePawn,
+  greenPath,
+  homeBase,
+  initialValues,
+  player,
+  redPath,
+  yellowPath
+} from "./constant.js";
 import "./styles.css";
-const redPath = [
-  92, 93, 94, 95, 96, 82, 67, 52, 37, 22, 7, 8, 9, 24, 39, 54, 69, 84, 100, 101,
-  102, 103, 104, 105, 120, 135, 134, 133, 132, 131, 130, 144, 159, 174, 189,
-  204, 219, 218, 217, 202, 187, 172, 157, 142, 126, 125, 124, 123, 122, 121,
-  106, 107, 108, 109, 110, 111, 112
-];
-const greenPath = [
-  24, 39, 54, 69, 84, 100, 101, 102, 103, 104, 105, 120, 135, 134, 133, 132,
-  131, 130, 144, 159, 174, 189, 204, 219, 218, 217, 202, 187, 172, 157, 142,
-  126, 125, 124, 123, 122, 121, 106, 91, 92, 93, 94, 95, 96, 82, 67, 52, 37, 22,
-  7, 8, 23, 38, 53, 68, 83, 98
-];
-const yellowPath = [
-  134, 133, 132, 131, 130, 144, 159, 174, 189, 204, 219, 218, 217, 202, 187,
-  172, 157, 142, 126, 125, 124, 123, 122, 121, 106, 91, 92, 93, 94, 95, 96, 82,
-  67, 52, 37, 22, 7, 8, 9, 24, 39, 54, 69, 84, 100, 101, 102, 103, 104, 105,
-  120, 119, 118, 117, 116, 115, 114
-];
-const bluePath = [
-  202, 187, 172, 157, 142, 126, 125, 124, 123, 122, 121, 106, 91, 92, 93, 94,
-  95, 96, 82, 67, 52, 37, 22, 7, 8, 9, 24, 39, 54, 69, 84, 100, 101, 102, 103,
-  104, 105, 120, 135, 134, 133, 132, 131, 130, 144, 159, 174, 189, 204, 219,
-  218, 203, 188, 173, 158, 143, 128
-];
-const homeBase = [
-  [33, 34, 48, 49],
-  [42, 43, 57, 58],
-  [177, 178, 192, 193],
-  [168, 169, 183, 184]
-];
-const falsePawn = [0, 0, 0, 0];
-const initialValues = [
-  [33, 34, 48, 49],
-  [42, 43, 57, 58],
-  [177, 178, 192, 193],
-  [168, 169, 183, 184]
-];
-
-const getItemText = (i, pawns = []) => {
-  // const colorIndex = pawns.findIndex((pawn) => pawn.includes(i));
-  let arrayOFIndexes = [];
-  pawns.forEach((pawn, colorIndex) => {
-    pawn.forEach((point, pawnIndex) => {
-      if (point === i) {
-        arrayOFIndexes.push({ colorIndex, pawnIndex }); //
-      }
-    });
-  });
-
-  return arrayOFIndexes;
-};
-const player = ["RED", "GREEN", "YELLOW", "BLUE"];
-const getColor = (i) => {
-  if (
-    [
-      92, 107, 108, 109, 110, 111, 112, 1, 76, 16, 31, 46, 61, 21, 36, 51, 66,
-      77, 78, 79, 80, 81, 2, 3, 4, 5, 6
-    ].includes(i)
-  )
-    return "red";
-  else if (
-    [
-      134, 119, 118, 117, 116, 115, 114, 145, 146, 147, 148, 149, 150, 220, 160,
-      175, 190, 205, 165, 180, 195, 210, 221, 222, 223, 224, 225
-    ].includes(i)
-  ) {
-    return "yellow";
-  } else if (
-    [
-      24, 23, 38, 53, 68, 83, 98, 11, 12, 13, 14, 15, 30, 45, 60, 75, 86, 87,
-      88, 89, 90, 10, 25, 40, 55, 70, 85
-    ].includes(i)
-  ) {
-    return "green";
-  } else if (
-    [
-      128, 143, 158, 173, 188, 203, 202, 211, 136, 137, 138, 139, 140, 141, 212,
-      213, 214, 215, 216, 151, 166, 181, 196, 156, 171, 186, 201
-    ].includes(i)
-  ) {
-    return "blue";
-  } else if ([113, 97, 99, 127, 129].includes(i)) {
-    return "#abc";
-  }
-};
+import { getColor, getItemText } from "./utils.js";
 export default function App() {
   const path = [redPath, greenPath, yellowPath, bluePath];
   const getNextTurn = (currentTurn) => {
@@ -101,15 +27,12 @@ export default function App() {
   const setMultiPlayer = (playerNumber) => () => {
     setPlayers(playerNumber);
   };
-  const unusedPath = [];
   const isAnyPawnMovable = (pollValue) => {
     if (
       pollValue === 6 &&
       pawns[turn].some((i) => homeBase[turn].includes(i))
     ) {
-      // if (pawns[turn].some((i) => homeBase[turn].includes(i))) {
       setMoved(false);
-      // }
     } else {
       let isMovableFound = pawns[turn].find((element, index) => {
         let elementIndex = path[turn].indexOf(element);
@@ -118,13 +41,10 @@ export default function App() {
         );
       });
       if (isMovableFound) {
-        // return true
         setMoved(false);
       } else {
-        // return false
         setTimeout(() => {
           setValue("start");
-          // setTurn((prev) => (prev === 3 ? 0 : prev + 1));
           setTurn(getNextTurn);
           setDisable(false);
         }, 1000);
@@ -142,13 +62,9 @@ export default function App() {
   useEffect(() => {
     if (moved && players) {
       setValue("start");
-      // setTurn((prev) => (prev === 3 ? 0 : prev + 1));
       setTurn(getNextTurn);
       setDisable(false);
       setMoved(false);
-      // if(){
-
-      // }
     }
   }, [moved]);
 
@@ -170,13 +86,10 @@ export default function App() {
         });
         setTurn(0);
       } else {
+        //default 4
       }
-      //setWinner
-      //setPawns
-      //setTurn
     }
   }, [players]);
-  // const value=6
   const pollClick = () => {
     const pollValue = Math.floor(Math.random() * 6) + 1;
     setValue(pollValue);
@@ -200,7 +113,7 @@ export default function App() {
               }
             }
           });
-          //path[turn][0] //rest 3 color pawn is there if yes then move pawn of only one from one class to their homebase
+
           return newPawns;
         });
         setMoved(true);
@@ -246,9 +159,6 @@ export default function App() {
             }
             return newPawns;
           });
-          //setPawn at target
-          //is he winner=>
-          // console.log(path[turn][path[turn].length - 1]);
 
           setMoved(true);
         }
@@ -299,8 +209,6 @@ export default function App() {
             turn={player[turn]}
             pollClick={pollClick}
           />
-
-          {/* {centerludo} */}
         </div>
       ) : (
         <MultiPlayer setMultiPlayer={setMultiPlayer} />
