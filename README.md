@@ -9,3 +9,4 @@ How to run code:
 Rules that we skipped in Ludo
 
 1. player will not get any bonus move.
+![Screenshot 2022-01-16 210758](https://user-images.githubusercontent.com/28338071/149666834-fff3d482-bc56-47b9-9e5c-3304e79aa825.png)
