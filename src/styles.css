@@ -1,0 +1,47 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  display: flex;
+}
+.player {
+  width: 100px;
+  background-color: green;
+  color: white;
+  border-radius: 4px;
+  border: 2px solid;
+  text-align: center;
+  padding: 2px;
+  margin: 5px;
+  cursor: pointer;
+}
+.player:hover {
+  background-color: chartreuse;
+  color: black;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+}
+.grid-item {
+  /* width: 20px; */
+  height: 30px;
+  border: 1px solid;
+  background-color: rgb(24, 223, 213);
+  /* display: flex; */
+}
+.RED-pawn {
+  color: red;
+  background-color: white;
+}
+.BLUE-pawn {
+  color: blue;
+  background-color: white;
+}
+.YELLOW-pawn {
+  color: yellow;
+  background-color: black;
+}
+.GREEN-pawn {
+  color: green;
+  background-color: white;
+}
