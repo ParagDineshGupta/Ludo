@@ -25,17 +25,17 @@ const bluePath = [
   218, 203, 188, 173, 158, 143, 128
 ];
 const homeBase = [
-  [47, 48, 62, 63],
-  [26, 27, 41, 42],
-  [163, 164, 178, 179],
-  [184, 185, 199, 200]
+  [33, 34, 48, 49],
+  [42, 43, 57, 58],
+  [177, 178, 192, 193],
+  [168, 169, 183, 184]
 ];
 const falsePawn = [0, 0, 0, 0];
 const initialValues = [
-  [47, 48, 62, 63],
-  [26, 27, 41, 42],
-  [163, 164, 178, 179],
-  [184, 185, 199, 200]
+  [33, 34, 48, 49],
+  [42, 43, 57, 58],
+  [177, 178, 192, 193],
+  [168, 169, 183, 184]
 ];
 
 const getItemText = (i, pawns = []) => {
@@ -260,6 +260,12 @@ export default function App() {
       {players && players > 1 ? (
         <div className="App">
           <div className="grid-container">
+            <img
+              src="/assets/image/center-ludo.png"
+              width="135"
+              height="135"
+              alt="image"
+            />
             {Array.from({ length: 225 }, (_, i) => {
               const colorIndexes = getItemText(i + 1, pawns);
               return (
@@ -277,22 +283,24 @@ export default function App() {
                             pawnIndex={v.pawnIndex}
                             pawnClass={`${player[v.colorIndex]}-pawn`}
                           >
-                            &#9823;
+                            <span class="pawn">&#9823;</span>
                           </Pawn>
                         );
                       })
-                    : i + 1}
+                    : null}
                 </div>
               );
             })}
           </div>
 
-          <ParagButton
+          <Dice
             disable={disable}
             value={value}
             turn={player[turn]}
             pollClick={pollClick}
           />
+
+          {/* {centerludo} */}
         </div>
       ) : (
         <MultiPlayer setMultiPlayer={setMultiPlayer} />
@@ -300,13 +308,17 @@ export default function App() {
     </>
   );
 }
-const ParagButton = ({ turn, value, pollClick, disable }) => {
+const Dice = ({ turn, value, pollClick, disable }) => {
   return (
-    <div>
-      <button onClick={pollClick} disabled={disable}>
-        {value}
-      </button>
-      {turn}
+    <div className="poll">
+      <div>
+        <button className="dice" onClick={pollClick} disabled={disable}>
+          {value}
+        </button>
+        <span style={{ width: "100px", color: turn, fontWeight: 700 }}>
+          {turn}
+        </span>
+      </div>
     </div>
   );
 };
@@ -322,7 +334,7 @@ const Pawn = (props) => {
 
 const MultiPlayer = ({ setMultiPlayer }) => {
   return (
-    <>
+    <div className="multiplayer">
       LUDO multi players
       <div className="player" onClick={setMultiPlayer(2)}>
         2 player
@@ -333,6 +345,6 @@ const MultiPlayer = ({ setMultiPlayer }) => {
       <div className="player" onClick={setMultiPlayer(4)}>
         4 player
       </div>
-    </>
+    </div>
   );
 };
